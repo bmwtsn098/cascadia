@@ -1,5 +1,5 @@
 # Build Stage:
-FROM golang:1.18
+FROM golang:1.18 as builder
 
 ## Install build dependencies.
 RUN apt-get update && \
@@ -16,5 +16,5 @@ RUN go build
 
 
 # Package Stage
-#FROM --platform=linux/amd64 ubuntu:20.04
-#COPY --from=builder /fuzzme /
+FROM debian:bookworm-slim
+COPY --from=builder /cascadia/cascadia /
